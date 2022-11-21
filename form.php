@@ -11,45 +11,33 @@ function get_name(string $data)
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
-
 }
-
 function uploadFile($file, $allowed_types = [], &$error_message = ''){
         $target_dir = 'uploads/';
         $target_file = $target_dir. rand() . basename($file['name']);
         $file_extension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
         if(count($allowed_types) < 1 || in_array($file_extension, $allowed_types)){
         move_uploaded_file($file['tmp_name'], $target_file );
         } else {
             $error_message = "we only allow" . implode(',', $allowed_types);
-
         }
 }
-
 function checkEmpty($data, &$error_str){
     if(empty($data)){
         $error_str = "This input is required";
     }
 }
-
 function displayError($error){
     echo "<br><span style='color:red; font-size: 12px'>$error</span>";
-
 }
-
-
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     //Assign post data to variables after post
-
     $name = get_name(trim($_POST['name']));
     $email = get_name($_POST['email']);
     $password = get_name($_POST['password']);
 
 
-
-
+    
     //Check if name is empty
 checkEmpty($name, $name_error);
 //Check if email is empty
@@ -64,15 +52,18 @@ if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)){
 if (!empty($password) && strlen($password) < 6){
     $password_error = "Password must be at least 6 characters";
 }
+$allChecks = empty($password_error) && empty($email_error) && empty($name_error);
 
-if (!empty($_FILES['image']['name'])){
-    uploadFile($_FILES['image'], [ 'png', 'jpg', 'jpeg', 'gif'], $image_error);
-
+if (isset($_FILES['image']['name']) && !empty($_FILES['image']['name']) && $allChecks){
+    if($allChecks){
+        uploadFile($_FILES['image'], [ 'png', 'jpg', 'jpeg', 'gif'], $image_error);
+    }
+  
   } else {
       $image_error = "the image is required";
   }
 
-if(empty($password_error) && empty($email_error) && empty($name_error) && empty($image_error)){
+if(empty($image_error)){
 
 
     //Store the valid data in session
