@@ -30,15 +30,21 @@ class Fruit
 
 $apple = new Fruit();
 $apple->set_name("Apple"); 
-echo $apple->get_name() ."<br>";
+$apple->set_color("Green"); 
+echo "The name is." . $apple->get_name() ."<br>";
+echo '<br>';
+echo "The color is: ". $apple->get_color()."<br>";
+
+echo '<br>';
 
 
 $pinapple = new Fruit();
 $pinapple->set_name("Pinapple");
-echo $pinapple-> get_name()."<br>";
+$pinapple->set_color("Red");
+echo 'The name is.' . $pinapple-> get_name()."<br>";
+echo '<br>';
+echo "The color is: ".$pinapple->get_color()."<br>";
 
-$green = new Fruit();
-$green->set_color("Green");
-echo $green-> get_color();
+
 
 ?>
