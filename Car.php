@@ -5,37 +5,75 @@ class Car
     public $name;
     public $color;
 
+    const MESSAGE = ' Thank you for visiting our showroom';
+
+
     function __construct($name, $color)
     {
         $this->name = $name;
         $this->color = $color;
     }
 
-    function get_name()
+    public function get_name()
     {
         return $this->name;
     }
 
-    function get_color()
+    private function get_color()
     {
         return $this->color;
     }
 
+    protected function show_color()
+    {
+        return $this->get_color();
+    }
+
 }
 
-$camry = new Car('Camry', 'Red');
+class Benz extends Car
+{
+    public $model;
 
-echo $camry->get_name(); // Camry
+    // Using model to override the construct variables
+    function __construct($name, $color, $model)
+    {
+        $this->name = $name;
+        $this->color = $color;
+        $this->model = $model;
+
+    }
+
+    public function print_color()
+    {
+        return $this->show_color();
+    }
+
+    public function get_model()
+    {
+         return $this->model;
+         
+    }
+
+
+}
+
+$benz = new Benz('Mercedes Benz', 'Blue', 2023);
+
+// This is the override the original model of the code
+$benz->model = '2020';
+
+echo 'The name of my car is ' . $benz->get_name() . ' and the color is ' . $benz->print_color() . ' while the model is ' . $benz->get_model(); 
 echo '<br>';
-echo $camry->get_color(); // Red
 
-echo '<br>';
+echo Benz::MESSAGE;
 
-$mercedes = new Car('Mercedes', 'Blue');
 
-echo $mercedes->get_name(); // mercedes
-echo '<br>';
-echo $mercedes->get_color(); // Red
+
+// $benz = new Car("Mercedes Benz", "Green");
+
+// echo' The name of my sport car is ' .$benz->get_name(). ' and i love it to be in ' .$benz->show_color()
+
 
 
 
